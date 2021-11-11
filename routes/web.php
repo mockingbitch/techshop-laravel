@@ -9,6 +9,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +60,8 @@ Route::middleware(['checklogin'])->group(function(){
         Route::get('index',[AdminController::class,'index'])->name('admin.index');
         Route::get('/',[AdminController::class,'index'])->name('admin.index');
         Route::get('/onlyfan',[AdminController::class,'onlyfan'])->name('onlyfan');
+
+
         //categories
         Route::prefix('category')->group(function (){
             Route::get('add-category', [CategoryController::class, 'create'])->name('add-category.index');
@@ -67,6 +71,8 @@ Route::middleware(['checklogin'])->group(function(){
             Route::get('edit-category/{id}', [CategoryController::class, 'show'])->name('category.edit');
             Route::post('edit-category/{id}', [CategoryController::class, 'update']);
         });
+
+
         //Brand
         Route::prefix('brand')->group(function (){
             Route::get('add-brand', [BrandController::class, 'create'])->name('add-brand.index');
@@ -75,6 +81,17 @@ Route::middleware(['checklogin'])->group(function(){
             Route::get('delete-brand/{id}', [BrandController::class, 'destroy'])->name('brand.delete');
             Route::get('edit-brand/{id}', [BrandController::class, 'show'])->name('brand.edit');
             Route::post('edit-brand/{id}', [BrandController::class, 'update']);
+        });
+
+
+        //Product
+        Route::prefix('product')->group(function (){
+            Route::get('add-product', [ProductController::class, 'create'])->name('add-product.index');
+            Route::post('add-product', [ProductController::class, 'store'])->name('add-product.create');
+            Route::get('list-product', [ProductController::class, 'index'])->name('list-product.index');
+            Route::get('delete-product/{id}', [ProductController::class, 'destroy'])->name('product.delete');
+            Route::get('edit-product/{id}', [ProductController::class, 'show'])->name('product.edit');
+            Route::post('edit-product/{id}', [ProductController::class, 'update']);
         });
     });
 });
