@@ -49,25 +49,21 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 250 Kim Giang</a></li>
             </ul>
             <ul class="header-links pull-right">
-                <?php
-                if (isset($_SESSION['username'])){?>
+
+                @if (isset($user)){
                 <li>
                     <div class="dropdown">
-                        <button > <i class="fa fa-user-o"></i><?= $_SESSION['username'] ?></button>
+                        <button > <i class="fa fa-user-o"></i>{{$user->name}}</button>
                         <div class="dropdown-content">
                             <a href="userinfo.php" style="color: black"><i class="fa fa-user-o"></i>Thông tin</a>
                             <hr>
-                            <a href="?logout" style="color: red">Đăng xuất</a>
+                            <a href="" style="color: red">Đăng xuất</a>
                         </div>
                     </div>
                 </li>
-                <?php
-                }
-                else{?>
-                <li><a href="login.php"><i class="fa fa-user-o"></i> Tài khoản</a></li>
-                <?php
-                }
-                ?>
+                @else
+                <li><a href="{{route('user-login-page')}}"><i class="fa fa-user-o"></i> Tài khoản</a></li>
+                @endif
             </ul>
         </div>
     </div>
@@ -321,32 +317,19 @@
 <script src="{{asset('frontend/js/main.js')}}"></script>
 <script src="{{asset('frontend/js/sweet-alert.js')}}"></script>
 <script>
-    $(document).ready(function(){
-        $('.add-to-cart-btn').click(function (){
-            swal("...", "Đã thêm vào giỏ hàng!", "success");
-        });
-    });
-    function addcart(id){
-        $.get('{{ route('addcart') }}'  ,{"id":id},function(data){
-            if(data.code==200){
-                $("#listcarts").load("{{ route('products',['type'=>$type]) }} #listcarts");
-                alertify.success('Thêm sản phẩm thành công');
-            }
 
+    function addCart(id){
+        $.get('{{ route('add-to-cart') }}'  ,{"id":id},function(data){
+            console.log('a');
+            {{--$("#listcarts").load("{{ route('products',['type'=>$type]) }} #listcarts");--}}
+        });
+        $(document).ready(function(){
+            $('.add-to-cart-btn').click(function (){
+                swal("...", "Đã thêm vào giỏ hàng!", "success");
+            });
         });
     }
-    // function addCart(productid){
-    //     // $.post("shoppingcart.php",{'productid':productid},function (data,status){
-    //     //     alert('Đã thêm vào giỏ hàng');
-    //     //     $("#listcart").load("http://techshop.test .cart");
-    //     // });
-    //     $.ajax({
-    //         url:'add-to-cart/'+productid,
-    //         type:'get',
-    //     }).done(function (reponse){
-    //
-    //     });
-    // }
+
     function removeCart(id){
         $.post('updatecart.php',{'id':id},function(data){
             $("#listcart").load("http://techshop.test/ .cart");

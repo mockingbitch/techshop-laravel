@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
@@ -24,8 +25,5 @@ class AuthController extends Controller
     {
         Auth::guard('admin')->logout();
         return redirect('admin/login');
-    }
-    public function register(Request $request)
-    {
     }
 }

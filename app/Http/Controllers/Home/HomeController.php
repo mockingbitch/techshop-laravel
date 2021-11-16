@@ -7,6 +7,7 @@ use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,10 +25,11 @@ class HomeController extends Controller
         $this->brandRepo = $brandRepository;
     }
     public function index(){
+        $user = Auth::guard('user')->user();
         $products = $this->productRepo->getAll();
         $categories = $this->categoryRepo->getAll();
         $brands = $this->brandRepo->getAll();
-        return view('home.pages.home',compact('products','categories','brands'));
+        return view('home.pages.home',compact('products','categories','brands','user'));
     }
     public function productDetail($id){
         $product = $this->productRepo->find($id);
