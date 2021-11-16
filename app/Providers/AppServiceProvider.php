@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
         \App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface::class
         => \App\Repositories\Contracts\Repository\BrandRepository::class,
         \App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface::class
-        => \App\Repositories\Contracts\Repository\ProducyRepository::class,
+        => \App\Repositories\Contracts\Repository\ProductRepository::class,
     ];
 
 

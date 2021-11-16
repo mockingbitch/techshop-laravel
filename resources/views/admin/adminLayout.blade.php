@@ -174,7 +174,7 @@
                     <img src="{{asset('backend/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">@php echo $admin->name; @endphp</a>
+                    <a href="{{route('profile')}}" class="d-block">@php echo $admin->name; @endphp</a>
                 </div>
             </div>
 
@@ -246,7 +246,7 @@
                             <li class="nav-item">
                                 <a href="{{route('list-category.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>List Category</p>
+                                    <p>List Categories</p>
                                 </a>
                             </li>
                         </ul>
@@ -255,21 +255,21 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
-                                Charts
+                                Brands
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="pages/charts/chartjs.html" class="nav-link">
+                                <a href="{{route('add-brand.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>ChartJS</p>
+                                    <p>Add New Brand</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages/charts/flot.html" class="nav-link">
+                                <a href="{{route('list-brand.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Flot</p>
+                                    <p>List Brands</p>
                                 </a>
                             </li>
 
@@ -279,21 +279,21 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tree"></i>
                             <p>
-                                UI Elements
+                                Products
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="pages/UI/general.html" class="nav-link">
+                                <a href="{{route('add-product.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>General</p>
+                                    <p>Add New Product</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages/UI/icons.html" class="nav-link">
+                                <a href="{{route('list-product.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Icons</p>
+                                    <p>List Products</p>
                                 </a>
                             </li>
                         </ul>

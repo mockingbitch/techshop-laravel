@@ -12,4 +12,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return Product::class;
     }
+    public function findByCategoryId($id){
+        $result = $this->model->where('categoryId',$id)->get();
+        return $result;
+    }
+    public function showRelatedProduct($id){
+        $product = $this->model->find($id);
+        $result = $this->model->where('brandId',$product->brandId)->get();
+        return $result;
+    }
 }

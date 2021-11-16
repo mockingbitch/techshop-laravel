@@ -47,6 +47,8 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" name="add" class="btn btn-primary">Sửa</button>
+                                    <button type="submit" class="btn btn-danger"><a href="{{route('list-category.index')}}" style="color: white">Trở về</a></button>
+
                                 </div>
 
                             </form>

@@ -20,4 +20,7 @@ class AdminController extends Controller
     public function onlyfan(){
         return view('admin.pages.maincontent');
     }
+    public function viewProfile(){
+        return view('admin.user.admin-profile');
+    }
 }

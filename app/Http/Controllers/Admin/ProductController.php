@@ -3,28 +3,37 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddProductRequestForm;
+use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    protected $categoryRepo;
+    protected $brandRepo;
     protected $productRepo;
     protected $productService;
 
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        ProductService $productService
+        ProductService $productService,
+        CategoryRepositoryInterface $categoryRepotory,
+        BrandRepositoryInterface $brandRepository
     )
     {
         $this->productRepo = $productRepository;
         $this->productService = $productService;
+        $this->categoryRepo = $categoryRepotory;
+        $this->brandRepo = $brandRepository;
     }
 
     public function index()
     {
-        $product = $this->productRepo->getAll();
-        return view('admin.product.list-product', compact('product'));
+        $products = $this->productRepo->getAll();
+        return view('admin.product.list-product', compact('products'));
     }
 
     public function destroy($id)
@@ -45,15 +54,28 @@ class ProductController extends Controller
     {
         $this->productService->update($id, $request);
 
-        return redirect(route('product.index'));
+        return redirect(route('list-product.index'));
     }
     public function create()
     {
-        return view('admin.product.add-product');
+        $categories = $this->categoryRepo->getAll();
+        $brands = $this->brandRepo->getAll();
+        return view('admin.product.add-product',compact('categories','brands'));
     }
-    public function store(Request $request){
-        $this->productService->add($request);
-        return redirect(route('product.index'));
+    public function store(AddProductRequestForm $request){
+
+        $data = $request->validated();
+        $this->productService->add($data);
+        return redirect(route('list-product.index'));
+    }
+    public function show($id)
+    {
+        $categories = $this->categoryRepo->getAll();
+        $brands = $this->brandRepo->getAll();
+        $product = $this->productRepo->find($id);
+        $product->load('category');
+
+        return view('admin.product.edit-product',compact('product','categories','brands'));
     }
     public function viewDetail(Request $request)
     {

@@ -32,6 +32,7 @@
                             <!-- /.card-header -->
                             <!-- form start -->
                             <form id="quickForm" action="" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row">
                                     <div class="card-body col-md-8">
                                         <div class="form-group">
@@ -67,38 +68,20 @@
                                     <div class="col-md-4" style="margin: 50px auto" >
                                         <div class="form-group">
                                             <label for="menu">Danh mục:</label>
-                                            <select name="cateid" style="width:50%;height:50px;margin-left:17px " class="select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                            <select name="categoryId" style="width:50%;height:50px;margin-left:17px " class="select form-select-lg mb-3" aria-label=".form-select-lg example">
                                                 <option>-----------Danh mục---------</option>
-                                                <?php
-                                                include "../classes/category.php";
-                                                $cate = new category();
-                                                $cateList = $cate->show_category();
-                                                if($cateList){
-                                                while($result=$cateList->fetch_assoc()){
-                                                ?>
-                                                <option value="<?php echo $result['cateid']; ?>"><?php echo $result['categoryName']; ?></option>
-                                                <?php
-                                                }
-                                                }
-                                                ?>
+                                                @foreach($categories as $category)
+                                                <option value="{{$category->id}}">{{$category->categoryName}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="menu">Thương hiệu:</label>
-                                            <select name="brandid" style="width:50%;height:50px;" class="select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                            <select name="brandId" style="width:50%;height:50px;" class="select form-select-lg mb-3" aria-label=".form-select-lg example">
                                                 <option>-----------Thương hiệu---------</option>
-                                                <?php
-                                                include "../classes/brand.php";
-                                                $brand = new brand();
-                                                $brandList = $brand->show_brand();
-                                                if($brandList){
-                                                while($result=$brandList->fetch_assoc()){
-                                                ?>
-                                                <option value="<?php echo $result['brandid']; ?>"><?php echo $result['brandName']; ?></option>
-                                                <?php
-                                                }
-                                                }
-                                                ?>
+                                               @foreach($brands as $brand)
+                                                <option value="{{$brand->id}}">{{$brand->brandName}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

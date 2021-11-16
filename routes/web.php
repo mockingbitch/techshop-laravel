@@ -10,7 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController;
-
+use App\Http\Controllers\Home\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,6 +60,7 @@ Route::middleware(['checklogin'])->group(function(){
         Route::get('index',[AdminController::class,'index'])->name('admin.index');
         Route::get('/',[AdminController::class,'index'])->name('admin.index');
         Route::get('/onlyfan',[AdminController::class,'onlyfan'])->name('onlyfan');
+        Route::get('/profile',[AdminController::class,'viewProfile'])->name('profile');
 
 
         //categories
@@ -95,4 +96,8 @@ Route::middleware(['checklogin'])->group(function(){
         });
     });
 });
+
+Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/category/{id}',[HomeController::class,'showCategoryItems'])->name('category');
+Route::get('/product/{id}',[HomeController::class,'productDetail'])->name('view-product');
 

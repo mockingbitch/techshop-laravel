@@ -60,10 +60,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $result = $this->find($id);
         if($result){
             $result->delete();
-
             return true;
         }
-
         return false;
     }
+
 }

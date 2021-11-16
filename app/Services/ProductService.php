@@ -24,18 +24,8 @@ class ProductService
      */
     public function add($request)
     {
-        $product = [
-            'productName' => $request->productName,
-            'productDescription' => $request->productDescription,
-            'productContent' => $request->productContent,
-            'productPrice'=> $request->productPrice,
-            'categoryId'=>$request->categoryId,
-            'brandId'=>$request->brandId
-        ];
-        if($request->hasFile('image')){
-            $product['productImage'] = $this->imageProcessing($request);
-        }
-        $this->productRepo->create($product);
+        $request['productImage'] = $this->imageProcessing($request['productImage']);
+        $this->productRepo->create($request);
     }
 
     /**
@@ -44,28 +34,29 @@ class ProductService
      */
     public function update($id, $request)
     {
+
         $product = [
             'productName' => $request->productName,
             'productDescription' => $request->productDescription,
             'productContent' => $request->productContent,
             'productPrice'=> $request->productPrice,
             'categoryId'=>$request->categoryId,
-            'brandId'=>$request->brandId
+            'brandId'=>$request->brandId,
+            'productQuantity'=>$request->productQuantity,
         ];
         if($request->hasFile('productImage')){
-            $product['productImage'] = $this->imageProcessing($request);
+            $product['productImage'] = $this->imageProcessing($request->productImage);
         }
-
         $this->productRepo->update($id, $product);
     }
-
     /**
      * @param $request array
      * @return mixed
      */
-    public function imageProcessing($request)
+    public function imageProcessing($file)
     {
-        $image = $request->file('productImage')->storeAs('uploads/imgProduct', uniqid() . '-' . $request->image->getClientOriginalName());
-        return $image;
+        $productImage = uniqid('',true) . $file->getClientOriginalName();
+        $file->move('uploads/product',$productImage);
+        return $productImage;
     }
 }
