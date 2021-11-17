@@ -96,6 +96,8 @@ Route::prefix('cart')->group(function(){
     Route::get('/remove-cart' ,[CartController::class,'delete'])->name('remove-cart');
     Route::get('/update-cart',[CartController::class,'update'])->name('update-cart');
     Route::get('/check-out',[CartController::class,'checkOut'])->name('check-out');
-    Route::get('/check-out/confirm',[CartController::class,'confirmCheckOut'])->name('confirm-check-out');
+    Route::get('/check-out/confirm',[CartController::class,'confirmCheckOut'])->name('send-mail-check-out');
+    Route::post('/check-out',[CartController::class,'addOrder'])->name('confirm-check-out');
+
 });
 

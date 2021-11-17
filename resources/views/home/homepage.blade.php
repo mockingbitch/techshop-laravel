@@ -49,7 +49,6 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 250 Kim Giang</a></li>
             </ul>
             <ul class="header-links pull-right">
-
                 @if (isset($customer)){
                 <li>
                     <div class="dropdown">
@@ -150,13 +149,11 @@
                                     <!--<small>3 Item(s) selected</small>-->
                                     @if(isset($carts))
                                     <h5>Tổng tiền: @php echo number_format($subtotal,0,',','.'); @endphp Đ</h5>
-                                    @else
-                                        echo '';
                                     @endif
                                 </div>
                                 <div class="cart-btns">
                                     <a href="{{route('view-cart')}}">Giỏ hàng</a>
-                                    <a href="/checkout.php">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="{{route('check-out')}}">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -191,9 +188,12 @@
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a href="/">Trang chủ</a></li>
-                @foreach($categories as $category)
+            @foreach($categories as $category)
                 <li><a href="{{route('category',['id' => $category->id])}}">{{$category->categoryName}}</a></li>
                 @endforeach
+                <li><a href="">All products</a></li>
+                <li><a href="">About Us</a></li>
+
             </ul>
             <!-- /NAV -->
         </div>

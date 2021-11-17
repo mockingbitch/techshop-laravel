@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Mail;
+use App\Models\Cart;
 class CartService
 {
     protected $productRepo;
@@ -13,12 +14,7 @@ class CartService
     }
     public function add($id){
         $products = $this->productRepo->find($id);
-//        if($products->promotion_price != 0){
-//            $prices = $products->promotion_price;
-//        }else{
-//            $prices = $products->unit_price;
-//        }
-        $cart = session()->get( 'cart');
+        $cart = session()->get('cart');
         if(isset($cart[$id])){
             $cart[$id]['quantity'] = $cart[$id]['quantity'] + 1;
         }else{
@@ -31,6 +27,20 @@ class CartService
             ];
         }
         session()->put('cart',$cart);
+//        $customerId = Auth::guard('customer')->user()->id;
+//        if (isset($customerId)){
+//            $sessionId = session()->getId();
+//            $cartProduct=[
+//                'customerId'=>$customerId,
+//                'productId'=>$cart[$id]['id'],
+//                'quantity'=>$cart[$id]['quantity'],
+//                'sessionId'=>$sessionId,
+//                'status'=>0,
+//                'productPrice'=>$cart[$id]['productPrice'],
+//                'productImage'=>$cart[$id]['productImage']
+//            ];
+//            Cart::create($cartProduct);
+//        }
         return response()->json(['code'=>200],200);
     }
     public function update($id,$quantity){

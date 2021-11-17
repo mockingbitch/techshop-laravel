@@ -5,17 +5,21 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use App\Services\CartService;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
+use Str;
 class CartController extends Controller
 {
     protected $cartService;
     protected $categoryRepo;
-    public function __construct(CartService $cartService, CategoryRepositoryInterface $categoryRepository)
+    protected $orderService;
+    public function __construct(CartService $cartService, CategoryRepositoryInterface $categoryRepository, OrderService $orderService)
     {
         $this->cartService = $cartService;
         $this->categoryRepo = $categoryRepository;
+        $this->orderService = $orderService;
     }
 
     public function add(Request $request){
@@ -43,10 +47,19 @@ class CartController extends Controller
         return view('home.pages.checkout',compact('carts','customer'));
     }
     public function confirmCheckOut(){
-        $checkOut = $this->cartService->checkOut();
         $carts = session()->get('cart');
-        unset($carts);
+        $checkOut = $this->cartService->checkOut();
         return view('home.pages.thank-you');
+    }
+    public function addOrder(Request $request){
+        $carts = session()->get('cart');
+        if (isset($carts)){
+            $code = strtoupper(Str::random(10));
+            $subTotal = $this->orderService->subTotal($carts);
+            $this->orderService->add($request,$subTotal,$code,$carts);
+            session()->forget('cart');
+            return redirect()->route('send-mail-check-out');
+        }
     }
 
 }

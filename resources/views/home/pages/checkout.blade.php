@@ -6,7 +6,7 @@
             <!-- row -->
             <div class="row">
                 <form action="" method="POST">
-
+                    @csrf
                     <div class="col-md-7">
                         <!-- Billing Details -->
                         <div class="billing-details">
@@ -15,23 +15,20 @@
                             </div>
                         @if(isset($customer))
                             <div class="form-group">
-                                <input class="input" type="text" name="customername" value="{{$customer->customerName}}">
+                                <input class="input" type="text" name="customerName" value="{{$customer->customerName}}">
                             </div>
                             <div class="form-group">
                                 <input class="input" type="email" name="email" value="{{$customer->email}}">
                             </div>
                             <div class="form-group">
-                                <input class="input" type="text" name="city" placeholder="Tỉnh/Thành phố">
+                                <input class="input" type="text" name="address" placeholder="Address">
                             </div>
                             <div class="form-group">
-                                <input class="input" type="text" name="addressdetail" placeholder="Đường / Xã / Quận">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="tel" name="sdt" placeholder="Số điện thoại">
+                                <input class="input" type="tel" name="phone" placeholder="Phone Number">
                             </div>
                             <!-- Order notes -->
                             <div class="order-notes">
-                                <textarea class="input" name="note" placeholder="Ghi chú"></textarea>
+                                <textarea class="input" name="note" placeholder="Note"></textarea>
                             </div>
                             <!-- /Order notes -->
                             @else

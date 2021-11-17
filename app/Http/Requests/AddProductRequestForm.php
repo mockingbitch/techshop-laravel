@@ -38,13 +38,6 @@ class AddProductRequestForm extends FormRequest
     public function rules(Request $request)
     {
         $ruleArr = [
-//            'room_name' => 'required|unique',
-//            'room_name' => [
-//                'required',
-//                Rule::unique('rooms')->ignore($this->id)
-//            ],
-//            'floor' => 'required|numeric',
-//            'price' => 'required|numeric'
             'productName' => 'required',
             'productDescription' => 'required',
             'productContent' => 'required',
@@ -52,7 +45,6 @@ class AddProductRequestForm extends FormRequest
             'categoryId'=> 'required|numeric',
             'brandId'=>'required|numeric',
             'productQuantity'=>'required|numeric',
-
         ];
         $img = $request->get('productImage',null);
         $ruleArr['productImage'] = !empty($img)? 'required|mimes:jpg,bmp,png,jpeg':'mimes:jpg,bmp,png,jpeg';
