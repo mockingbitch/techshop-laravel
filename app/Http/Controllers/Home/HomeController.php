@@ -25,21 +25,20 @@ class HomeController extends Controller
         $this->brandRepo = $brandRepository;
     }
     public function index(){
-        $user = Auth::guard('user')->user();
+        $customer = Auth::guard('customer')->user();
         $products = $this->productRepo->getAll();
         $categories = $this->categoryRepo->getAll();
         $brands = $this->brandRepo->getAll();
-        return view('home.pages.home',compact('products','categories','brands','user'));
+        $carts = session()->get('cart');
+        return view('home.pages.home',compact('products','categories','brands','customer','carts'));
     }
     public function productDetail($id){
         $product = $this->productRepo->find($id);
-        $categories = $this->categoryRepo->getAll();
         $related_products = $this->productRepo->showRelatedProduct($id);
-        return view('home.pages.view-product-detail',compact('product','related_products','categories'));
+        return view('home.pages.view-product-detail',compact('product','related_products'));
     }
     public function showCategoryItems($id){
-        $categories = $this->categoryRepo->getAll();
         $products = $this->productRepo->findByCategoryId($id);
-        return view('home.pages.view-category-items',compact('products','categories'));
+        return view('home.pages.view-category-items',compact('products',));
     }
 }

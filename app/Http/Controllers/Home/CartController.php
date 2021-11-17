@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use App\Services\CartService;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Mail;
 class CartController extends Controller
 {
     protected $cartService;
@@ -35,6 +36,17 @@ class CartController extends Controller
     public function delete(Request $request){
         $id = $request->query('id');
         $this->cartService->delete($id);
+    }
+    public function checkOut(){
+        $carts = session()->get('cart');
+        $customer = Auth::guard('customer')->user();
+        return view('home.pages.checkout',compact('carts','customer'));
+    }
+    public function confirmCheckOut(){
+        $checkOut = $this->cartService->checkOut();
+        $carts = session()->get('cart');
+        unset($carts);
+        return view('home.pages.thank-you');
     }
 
 }

@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AuthController;
@@ -12,7 +11,8 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CartController;
-use App\Http\Controllers\Home\UserController;
+use App\Http\Controllers\Home\CustomerController;
+use App\Http\Controllers\Home\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,34 +25,6 @@ use App\Http\Controllers\Home\UserController;
 |
 */
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin' => Route::has('login'),
-//        'canRegister' => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion' => PHP_VERSION,
-//    ]);
-//});
-//
-//Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//    return Inertia::render('Dashboard');
-//})->name('dashboard');
-//
-//Route::get('/email/verify', function () {
-//    return view('auth.verify-email');
-//})->middleware('auth')->name('verification.notice');
-//
-//Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//    $request->fulfill();
-//
-//    return redirect('/home');
-//})->middleware(['auth', 'signed'])->name('verification.verify');
-//
-//Route::post('/email/verification-notification', function (Request $request) {
-//    $request->user()->sendEmailVerificationNotification();
-//
-//    return back()->with('message', 'Verification link sent!');
-//})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 //Admin
@@ -104,13 +76,15 @@ Route::middleware(['checklogin'])->group(function(){
     });
 });
 
-//User
-Route::prefix('user')->group(function (){
-    Route::get('/login',[UserController::class,'index'])->name('user-login-page');
-    Route::get('/register',[UserController::class,'register'])->name('user-register-page');
+//customer
+Route::prefix('customer')->group(function (){
+    Route::get('/login',[CustomerController::class,'index'])->name('customer-login-page');
+    Route::post('/login', [CustomerController::class, 'login'])->name('customer-login');
+    Route::get('/register',[CustomerController::class,'register'])->name('customer-register-page');
 });
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/home',[HomeController::class,'index'])->name('home');
 Route::get('/category/{id}',[HomeController::class,'showCategoryItems'])->name('category');
 Route::get('/product/{id}',[HomeController::class,'productDetail'])->name('view-product');
 Route::get('/add-to-cart',[CartController::class,'add'])->name('add-to-cart');
@@ -118,4 +92,7 @@ Route::get('/view-cart',[CartController::class,'index'])->name('view-cart');
 Route::prefix('cart')->group(function(){
     Route::get('/remove-cart' ,[CartController::class,'delete'])->name('remove-cart');
     Route::get('/update-cart',[CartController::class,'update'])->name('update-cart');
+    Route::get('/check-out',[CartController::class,'checkOut'])->name('check-out');
+    Route::get('/check-out/confirm',[CartController::class,'confirmCheckOut'])->name('confirm-check-out');
 });
+

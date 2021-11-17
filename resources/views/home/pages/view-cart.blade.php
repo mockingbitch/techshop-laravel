@@ -83,8 +83,8 @@
                                 </ul>
                                 <div class="button5">
                                     <div class="row">
-                                        <button class="btn btn-danger col-md-5"><a href="checkout.php" class="btn"><h4>Thanh toán</h4></a></button>
-                                        <button style="margin-left: 10px" class="btn btn-default col-md-5"><a href="/" class="btn"><h4>Tiếp tục mua</h4></a></button>
+                                        <button class="btn btn-danger col-md-5"><a href="{{route('check-out')}}" class="btn"><h4>Thanh toán</h4></a></button>
+                                        <button style="margin-left: 10px" class="btn btn-default col-md-5"><a href="{{route('home')}}" class="btn"><h4>Tiếp tục mua</h4></a></button>
                                     </div>
                                 </div>
                             </div>

@@ -50,10 +50,10 @@
             </ul>
             <ul class="header-links pull-right">
 
-                @if (isset($user)){
+                @if (isset($customer)){
                 <li>
                     <div class="dropdown">
-                        <button > <i class="fa fa-user-o"></i>{{$user->name}}</button>
+                        <button > <i class="fa fa-user-o"></i>{{$customer->customerName}}</button>
                         <div class="dropdown-content">
                             <a href="userinfo.php" style="color: black"><i class="fa fa-user-o"></i>Thông tin</a>
                             <hr>
@@ -62,7 +62,7 @@
                     </div>
                 </li>
                 @else
-                <li><a href="{{route('user-login-page')}}"><i class="fa fa-user-o"></i> Tài khoản</a></li>
+                <li><a href="{{route('customer-login-page')}}"><i class="fa fa-user-o"></i> Tài khoản</a></li>
                 @endif
             </ul>
         </div>
@@ -79,7 +79,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="/" class="logo">
-                            <img src="../admin/dist/img/logo.svg" width="60%" alt="">
+                            <img src="{{asset('backend/dist/img/logo.svg')}}" width="60%" alt="">
                         </a>
                     </div>
                 </div>
@@ -125,44 +125,37 @@
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list"  >
-                                    <!--                                            cart-->
-{{--                                    <?php if (isset($_SESSION['cart'])) : ?>--}}
-{{--                                    <?php $subtotal = 0; ?>--}}
-{{--                                    <?php foreach ($_SESSION['cart'] as $key => $value): ?>--}}
+                                 @if(isset($carts))
+                                    @php $subtotal = 0; @endphp
+                                        @foreach($carts as $cart)
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img width="50px" src="/admin/uploads/products/" alt="">
+                                            <img width="50px" src="{{asset('uploads/product/'.$cart['productImage'])}}" alt="">
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">productName</a></h3>
-                                            <h4 class="product-price"><span class="qty">Quantityx</span>Price Đ</h4>
+                                            <h3 class="product-name"><a href="#">{{$cart['productName']}}</a></h3>
+                                            <h4 class="product-price"><span class="qty">{{$cart['quantity']}}x</span>{{$cart['productPrice']}} Đ</h4>
+                                            @php $total = $cart['quantity']*$cart['productPrice'] @endphp
                                         </div>
-<!--                                        --><?php //$subtotal = $subtotal+$total;
-//
-//                                        ?>
-                                        <button class="delete" onclick="removeCart(id)"><i class="fa fa-close"></i></button>
+                                      @php $subtotal = $subtotal+$total; @endphp
+                                        <button class="delete" onclick="removeCart({{$cart['id']}})"><i class="fa fa-close"></i></button>
                                     </div>
-
-{{--                                    <?php endforeach; ?>--}}
-{{--                                    <?php else:?>--}}
-{{--                                    <p>Chưa có sản phẩm nào trong giỏ hàng!</p>--}}
-{{--                                <?php endif; ?>--}}
-                                <!--                                            cart-->
+                                    @endforeach
+                                    @else
+                                     <p>Chưa có sản phẩm nào trong giỏ hàng!</p>
+                                    @endif
+                                <!--cart-->
                                 </div>
                                 <div class="cart-summary">
-                                    <!--											<small>3 Item(s) selected</small>-->
-{{--                                    <?php--}}
-{{--                                    if (isset($_SESSION['cart'])){--}}
-{{--                                    ?>--}}
-{{--                                    <h5>Tổng tiền: <?php echo number_format($subtotal,0,',','.'); ?> Đ</h5>--}}
-{{--                                    <?php--}}
-{{--                                    }else{--}}
-{{--                                        echo '';--}}
-{{--                                    }--}}
-{{--                                    ?>--}}
+                                    <!--<small>3 Item(s) selected</small>-->
+                                    @if(isset($carts))
+                                    <h5>Tổng tiền: @php echo number_format($subtotal,0,',','.'); @endphp Đ</h5>
+                                    @else
+                                        echo '';
+                                    @endif
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="/viewcart.php">Giỏ hàng</a>
+                                    <a href="{{route('view-cart')}}">Giỏ hàng</a>
                                     <a href="/checkout.php">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
@@ -320,8 +313,7 @@
 
     function addCart(id){
         $.get('{{ route('add-to-cart') }}'  ,{"id":id},function(data){
-            console.log('a');
-            {{--$("#listcarts").load("{{ route('products',['type'=>$type]) }} #listcarts");--}}
+            $("#listcart").load("{{route('home')}} .cart");
         });
         $(document).ready(function(){
             $('.add-to-cart-btn').click(function (){
@@ -329,10 +321,10 @@
             });
         });
     }
-
     function removeCart(id){
-        $.post('updatecart.php',{'id':id},function(data){
-            $("#listcart").load("http://techshop.test/ .cart");
+        $.get("{{ route('remove-cart')}}",{"id":id},function(data){
+            // alert(id);
+            $("#listcart").load("{{route('home')}} .cart");
         });
     }
 </script>

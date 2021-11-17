@@ -94,7 +94,7 @@
 							Already have an account?
 						</span>
 
-                    <a href="{{route('user-login-page')}}" class="txt2 bo1">
+                    <a href="{{route('customer-login-page')}}" class="txt2 bo1">
                         Sign in
                     </a>
                 </div>

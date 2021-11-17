@@ -2,7 +2,8 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
-
+use Illuminate\Support\Facades\Auth;
+use Mail;
 class CartService
 {
     protected $productRepo;
@@ -47,5 +48,15 @@ class CartService
             session()->put('cart',$cart);
             return response()->json(['code'=>200],200);
         }
+    }
+    public function checkOut(){
+            $customer = Auth::guard('customer')->user();
+            $mail = $customer['email'];
+            $name = $customer['name'];
+            $carts = session()->get('cart');
+            Mail::send('home.mail.mail-cart',compact('customer','carts'),function($email) use($mail,$name){
+                $email->subject('Techshop - Xác nhận đơn hàng');
+                $email->to($mail,$name);
+            });
     }
 }

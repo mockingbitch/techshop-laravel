@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,8 +36,19 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('admin.adminLayout', function($view) {
             $admin = Auth::guard('admin')->user();
-//            $admin = Model_product_type::all();
             view()->share('admin', $admin);
+        });
+        view()->composer('home.homepage', function($view) {
+            $customer = Auth::guard('customer')->user();
+            view()->share('customer', $customer);
+        });
+        view()->composer('home.homepage', function($view) {
+            $categories = Category::all();
+            view()->share('categories', $categories);
+        });
+        view()->composer('home.homepage',function($view){
+            $carts = session()->get('cart');
+            view()->share('carts',$carts);
         });
     }
 }

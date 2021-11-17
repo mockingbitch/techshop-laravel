@@ -13,14 +13,12 @@
                             <div class="section-title">
                                 <h3 class="title">Thông tin nhận hàng</h3>
                             </div>
-                            <?php
-                            if (isset($_SESSION['username'])){
-                            ?>
+                        @if(isset($customer))
                             <div class="form-group">
-                                <input class="input" type="text" name="customername" value="<?= $_SESSION['fullname'] ?>">
+                                <input class="input" type="text" name="customername" value="{{$customer->customerName}}">
                             </div>
                             <div class="form-group">
-                                <input class="input" type="email" name="email" value="<?= $_SESSION['usermail'] ?>">
+                                <input class="input" type="email" name="email" value="{{$customer->email}}">
                             </div>
                             <div class="form-group">
                                 <input class="input" type="text" name="city" placeholder="Tỉnh/Thành phố">
@@ -29,21 +27,16 @@
                                 <input class="input" type="text" name="addressdetail" placeholder="Đường / Xã / Quận">
                             </div>
                             <div class="form-group">
-                                <input class="input" type="tel" name="sdt" value="<?= $_SESSION['phone'] ?>">
+                                <input class="input" type="tel" name="sdt" placeholder="Số điện thoại">
                             </div>
                             <!-- Order notes -->
                             <div class="order-notes">
                                 <textarea class="input" name="note" placeholder="Ghi chú"></textarea>
                             </div>
                             <!-- /Order notes -->
-                            <?php
-                            }
-                            else{
-                            ?>
-                            <h3>Vui lòng <a href="login.php" style=" font-weight: bold">đăng nhập</a> để tiếp tục.</h3>
-                            <?php
-                            }
-                            ?>
+                            @else
+                            <h3>Vui lòng <a href="{{route('customer-login-page')}}" style=" font-weight: bold">đăng nhập</a> để tiếp tục.</h3>
+                            @endif
                         </div>
 
 
@@ -61,37 +54,32 @@
                                 <div><strong>Sản phẩm</strong></div>
                                 <div><strong>Tổng</strong></div>
                             </div>
-                            <?php $subtotal = 0; ?>
-                            <?php if (isset($_SESSION['cart'])){
-                            ?>
-                            <?php foreach ($_SESSION['cart'] as $key => $value): ?>
+                            @php $subtotal=0; @endphp
+                            @if(isset($carts))
+                            @foreach($carts as $cart)
                             <div class="order-products">
                                 <div class="order-col">
-                                    <div><?php echo $value['qty'] ?> x <?php echo $value['name'] ?></div>
-                                    <div><?php $total = $value['qty']*$value['price'];
+                                    <div>{{$cart['quantity']}} x {{$cart['productName']}}</div>
+                                    <div>@php $total = $cart['quantity']*$cart['productPrice'];
                                         echo number_format($total,0,',','.');
-                                        ?> Đ</div>
+                                        @endphp Đ</div>
                                 </div>
                             </div>
-                            <?php $subtotal+=$total; ?>
-                            <?php endforeach; ?>
-                            <?php
-                            }else{
-                                echo '<h4 style="color: red">Chưa có sản phẩm nào trong giỏ hàng, vui lòng thêm sản phẩm để tiến hành thanh toán!!!</h4>';
-                            }
-                            ?>
+                            @php $subtotal+=$total; @endphp
+                                @endforeach
+                            @else
+                                echo '<h4 style="color: red">Chưa có sản phẩm nào trong giỏ hàng, vui lòng <a href="{{route('home')}}">thêm sản phẩm</a> để tiến hành thanh toán!!!</h4>';
+                            @endif
                             <div class="order-col">
                                 <div>Shipping</div>
                                 <div><strong>FREE</strong></div>
                             </div>
                             <div class="order-col">
                                 <div><strong>Tổng thanh toán</strong></div>
-                                <div><strong class="order-total"><?php echo number_format($subtotal,0,',','.');?> Đ</strong></div>
+                                <div><strong class="order-total">@php echo number_format($subtotal,0,',','.');@endphp Đ</strong></div>
                             </div>
                         </div>
-                        <?php
-                        if (isset($_SESSION['cart'])){
-                        ?>
+                        @if(isset($carts))
                         <div class="payment-method">
                             <div class="input-radio">
                                 <input type="radio" name="payment" id="payment-1">
@@ -131,10 +119,8 @@
                                 I've read and accept the <a href="#">terms & conditions</a>
                             </label>
                         </div>
-                        <input class="primary-btn order-submit" type="submit" name="checkout" value="Xác nhận đơn hàng">
-                        <?php
-                        }
-                        ?>
+                            <button class="primary-btn order-submit" type="submit" name="checkout"><a href="{{route('confirm-check-out')}}">Xác nhận đơn hàng</a></button>
+                        @endif
                     </div>
                 </form>
                 <!-- /Order Details -->
