@@ -80,11 +80,14 @@ Route::middleware(['checklogin'])->group(function(){
 Route::prefix('customer')->group(function (){
     Route::get('/login',[CustomerController::class,'index'])->name('customer-login-page');
     Route::post('/login', [CustomerController::class, 'login'])->name('customer-login');
-    Route::get('/register',[CustomerController::class,'register'])->name('customer-register-page');
+    Route::get('/register',[CustomerController::class,'registerForm'])->name('customer-register-page');
+    Route::post('/register',[CustomerController::class,'register'])->name('customer-register');
+    Route::get('/verify/{customer}/{token}',[CustomerController::class,'verify'])->name('verify-account');
 });
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/home',[HomeController::class,'index'])->name('home');
+Route::get('/logout',[HomeController::class,'logout'])->name('customer-logout');
 Route::get('/category/{id}',[HomeController::class,'showCategoryItems'])->name('category');
 Route::get('/product/{id}',[HomeController::class,'productDetail'])->name('view-product');
 Route::get('/add-to-cart',[CartController::class,'add'])->name('add-to-cart');

@@ -53,7 +53,7 @@
 						</span>
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Username is required">
-                    <input class="input100" type="text" name="userName">
+                    <input class="input100" type="text" name="customerName">
                     <span class="focus-input100"></span>
                 </div>
                 <div class="p-t-31 p-b-9">

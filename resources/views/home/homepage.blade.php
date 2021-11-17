@@ -57,7 +57,7 @@
                         <div class="dropdown-content">
                             <a href="userinfo.php" style="color: black"><i class="fa fa-user-o"></i>Thông tin</a>
                             <hr>
-                            <a href="" style="color: red">Đăng xuất</a>
+                            <a href="{{route('customer-logout')}}" style="color: red">Đăng xuất</a>
                         </div>
                     </div>
                 </li>

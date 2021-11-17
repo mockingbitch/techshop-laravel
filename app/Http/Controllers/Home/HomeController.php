@@ -41,4 +41,9 @@ class HomeController extends Controller
         $products = $this->productRepo->findByCategoryId($id);
         return view('home.pages.view-category-items',compact('products',));
     }
+    public function logout()
+    {
+        Auth::guard('customer')->logout();
+        return redirect('/');
+    }
 }
