@@ -59,11 +59,10 @@ class CartService
             return response()->json(['code'=>200],200);
         }
     }
-    public function checkOut(){
+    public function checkOut($carts){
             $customer = Auth::guard('customer')->user();
             $mail = $customer['email'];
             $name = $customer['name'];
-            $carts = session()->get('cart');
             Mail::send('home.mail.mail-cart',compact('customer','carts'),function($email) use($mail,$name){
                 $email->subject('Techshop - Xác nhận đơn hàng');
                 $email->to($mail,$name);

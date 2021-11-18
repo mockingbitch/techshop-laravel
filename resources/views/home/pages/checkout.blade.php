@@ -5,7 +5,7 @@
         <div class="container">
             <!-- row -->
             <div class="row">
-                <form action="" method="POST">
+                <form action="{{route('confirm-check-out')}}" method="POST">
                     @csrf
                     <div class="col-md-7">
                         <!-- Billing Details -->
@@ -116,7 +116,7 @@
                                 I've read and accept the <a href="#">terms & conditions</a>
                             </label>
                         </div>
-                            <button class="primary-btn order-submit" type="submit" name="checkout"><a href="{{route('confirm-check-out')}}">Xác nhận đơn hàng</a></button>
+                            <button class="primary-btn order-submit" type="submit" name="checkout">Xác nhận đơn hàng</button>
                         @endif
                     </div>
                 </form>

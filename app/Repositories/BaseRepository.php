@@ -51,7 +51,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
             $result->update($attributes);
             return $result;
         }
-
         return false;
     }
 

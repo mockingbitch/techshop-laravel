@@ -46,20 +46,15 @@ class CartController extends Controller
         $customer = Auth::guard('customer')->user();
         return view('home.pages.checkout',compact('carts','customer'));
     }
-    public function confirmCheckOut(){
-        $carts = session()->get('cart');
-        $checkOut = $this->cartService->checkOut();
-        return view('home.pages.thank-you');
-    }
     public function addOrder(Request $request){
         $carts = session()->get('cart');
         if (isset($carts)){
+            $checkOut = $this->cartService->checkOut($carts);
             $code = strtoupper(Str::random(10));
             $subTotal = $this->orderService->subTotal($carts);
             $this->orderService->add($request,$subTotal,$code,$carts);
             session()->forget('cart');
-            return redirect()->route('send-mail-check-out');
         }
+        return view('home.pages.thank-you');
     }
-
 }

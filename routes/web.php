@@ -13,7 +13,8 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CustomerController;
 use App\Http\Controllers\Home\MailController;
-
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\OrderDetailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,6 +74,13 @@ Route::middleware(['checklogin'])->group(function(){
             Route::get('edit-product/{id}', [ProductController::class, 'show'])->name('product.edit');
             Route::post('edit-product/{id}', [ProductController::class, 'update']);
         });
+
+        //Order
+        Route::prefix('order')->group(function (){
+            Route::get('list-order',[OrderController::class,'index'])->name('list-order.index');
+            Route::get('view-order/{id}',[OrderDetailController::class,'index'])->name('order.view');
+            Route::post('view-order/{id}',[OrderDetailController::class,'handleOrder'])->name('order.view');
+        });
     });
 });
 
@@ -96,8 +104,6 @@ Route::prefix('cart')->group(function(){
     Route::get('/remove-cart' ,[CartController::class,'delete'])->name('remove-cart');
     Route::get('/update-cart',[CartController::class,'update'])->name('update-cart');
     Route::get('/check-out',[CartController::class,'checkOut'])->name('check-out');
-    Route::get('/check-out/confirm',[CartController::class,'confirmCheckOut'])->name('send-mail-check-out');
     Route::post('/check-out',[CartController::class,'addOrder'])->name('confirm-check-out');
-
 });
 
