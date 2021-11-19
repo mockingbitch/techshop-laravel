@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
         => \App\Repositories\Contracts\Repository\OrderRepository::class,
         \App\Repositories\Contracts\RepositoryInterface\OrderDetailRepositoryInterface::class
         => \App\Repositories\Contracts\Repository\OrderDetailRepository::class,
+        \App\Repositories\Contracts\RepositoryInterface\StockRepositoryInterface::class
+        => \App\Repositories\Contracts\Repository\StockRepository::class,
     ];
 
 

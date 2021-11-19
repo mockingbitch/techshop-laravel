@@ -27,20 +27,6 @@ class CartService
             ];
         }
         session()->put('cart',$cart);
-//        $customerId = Auth::guard('customer')->user()->id;
-//        if (isset($customerId)){
-//            $sessionId = session()->getId();
-//            $cartProduct=[
-//                'customerId'=>$customerId,
-//                'productId'=>$cart[$id]['id'],
-//                'quantity'=>$cart[$id]['quantity'],
-//                'sessionId'=>$sessionId,
-//                'status'=>0,
-//                'productPrice'=>$cart[$id]['productPrice'],
-//                'productImage'=>$cart[$id]['productImage']
-//            ];
-//            Cart::create($cartProduct);
-//        }
         return response()->json(['code'=>200],200);
     }
     public function update($id,$quantity){

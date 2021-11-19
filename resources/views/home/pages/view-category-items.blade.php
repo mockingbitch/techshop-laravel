@@ -256,12 +256,8 @@
                 <!-- /store products -->
 
                 <!-- store bottom filter -->
-                <div class="store-filter clearfix">
-                    <span class="store-qty">Showing 20-100 products</span>
-                    <ul class="store-pagination">
-
-                        <li><a href=""><i class="fa fa-angle-right"></i></a></li>
-                    </ul>
+                <div class="store-filter clearfix" align="center" style="margin: 100px">
+                    {!! $products->links("pagination::bootstrap-4") !!}
                 </div>
                 <!-- /store bottom filter -->
             </div>

@@ -7,7 +7,7 @@ use App\Models\Customer;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Mail;
 class CustomerController extends Controller
 {
     protected $customerService;
@@ -23,7 +23,15 @@ class CustomerController extends Controller
         return view('home.customer.register');
     }
     public function register(Request $request){
-        $this->customerService->create($request);
+        $customer = $this->customerService->create($request);
+        if ($customer){
+            Mail::send('home.mail.mail-register',compact('customer'),function ($email) use($customer){
+                $email->subject('Techshop - Xác nhận tài khoản của bạn!!!');
+                $email->to($customer->email,$customer->customerName);
+            });
+            return redirect()->route('customer-login');
+        }
+        return redirect()->back();
     }
     public function login(Request $request){
         $credentials =  $request->only('email', 'password');

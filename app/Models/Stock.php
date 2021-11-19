@@ -4,24 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Order;
-class OrderDetail extends Model
+
+class Stock extends Model
 {
     use HasFactory;
-    protected $table = 'orderdetails';
-
+    protected $table = 'stocks';
     protected $fillable = [
-        'orderId',
         'productId',
-        'productName',
         'quantity',
+        'status',
+        'productName',
         'productPrice',
-        'total',
         'productImage',
-        'code',
     ];
-    public function order()
-    {
-        return $this->belongsTo(Order::class, 'orderId');
-    }
 }

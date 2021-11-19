@@ -96,7 +96,7 @@
                             </div>
                             <button class="add-to-cart-btn" onclick="addCart({{$product->id}})"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
 
-                            <button style="margin: 30px 0px 0px 170px" class="add-to-cart-btn"><a href="viewcart.php" style="color: white;font-weight: bold"><i class="fa fa-shopping-cart"></i> Xem giỏ hàng</a></button>
+                            <button style="margin: 30px 0px 0px 170px" class="add-to-cart-btn"><a href="{{route('view-cart')}}" style="color: white;font-weight: bold"><i class="fa fa-shopping-cart"></i> Xem giỏ hàng</a></button>
                         </div>
 
                         <ul class="product-btns">

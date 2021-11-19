@@ -57,7 +57,7 @@
                                         <div class="form-group">
                                             <label for="menu">Số lượng</label>
                                             <input type="number" name="productQuantity" class="form-control"
-                                                   value="{{$product->productQuantity}}">
+                                                   value="{{$product->stock->quantity}}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="menu">Hình ảnh sản phẩm</label>

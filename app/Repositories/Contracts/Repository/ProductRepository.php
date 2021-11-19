@@ -13,7 +13,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return Product::class;
     }
     public function findByCategoryId($id){
-        $result = $this->model->where('categoryId',$id)->get();
+        $result = $this->model->where('categoryId',$id)->paginate(9);
         return $result;
     }
     public function showRelatedProduct($id){
@@ -24,6 +24,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function search($request){
         $textSearch = $request->textSearch;
         $result = $this->model->where('productName','like',$textSearch)->get();
+        return $result;
+    }
+    public function getAllProduct()
+    {
+        $result = $this->model->orderBy('id','DESC')->paginate(3);
         return $result;
     }
 }

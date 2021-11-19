@@ -32,13 +32,13 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = $this->productRepo->paginate(5);
+        $products = $this->productRepo->getAllProduct();
         return view('admin.product.list-product', compact('products'));
     }
 
     public function destroy($id)
     {
-        $this->productRepo->delete($id);
+        $this->productService->delete($id);
 
         return redirect()->back();
     }
@@ -54,7 +54,7 @@ class ProductController extends Controller
     {
         $this->productService->update($id, $request);
 
-        return redirect(route('list-product.index'));
+        return redirect()->route('list-product.index');
     }
     public function create()
     {

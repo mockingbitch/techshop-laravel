@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Repositories\Contracts\RepositoryInterface\OrderRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
+use App\Services\StockService;
 use Illuminate\Support\Facades\Auth;
 use Mail;
 use App\Models\Cart;
@@ -14,10 +15,14 @@ class OrderService
 {
     protected $productRepo;
     protected $orderRepo;
-    public function __construct(ProductRepositoryInterface $productRepository , OrderRepositoryInterface $orderRepository)
+    protected $stockService;
+    public function __construct(ProductRepositoryInterface $productRepository ,
+                                OrderRepositoryInterface $orderRepository,
+                                StockService $stockService)
     {
         $this->productRepo = $productRepository;
         $this->orderRepo = $orderRepository;
+        $this->stockService = $stockService;
     }
     public function add($request,$subTotal,$code,$carts){
         $order=[
@@ -34,6 +39,7 @@ class OrderService
        foreach ($carts as $cart){
            $orderDetail = [
                'orderId'=>$addOrder->id,
+               'productId'=>$cart['id'],
                'productName'=>$cart['productName'],
                'quantity'=>$cart['quantity'],
                'productPrice'=>$cart['productPrice'],
@@ -41,12 +47,16 @@ class OrderService
                'productImage'=>$cart['productImage'],
                'code'=>$code,
            ];
-           $addOrderDetail = OrderDetail::create($orderDetail);
+//           dd($orderDetail);
+           $order = $this->stockService->subtractOrder($orderDetail['productId'],$orderDetail['quantity']);
+           if ($order!=false){
+                OrderDetail::create($orderDetail);
+           }
+
        }
     }
     public function subTotal($carts){
         $subTotal = 0;
-//        $carts = $carts->toArray();
         foreach ($carts as $cart){
             $orderDetail = [
                 'quantity'=>$cart['quantity'],

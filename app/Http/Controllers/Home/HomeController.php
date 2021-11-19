@@ -39,7 +39,7 @@ class HomeController extends Controller
     }
     public function showCategoryItems($id){
         $products = $this->productRepo->findByCategoryId($id);
-        return view('home.pages.view-category-items',compact('products',));
+        return view('home.pages.list-product',compact('products',));
     }
     public function logout()
     {
@@ -49,5 +49,9 @@ class HomeController extends Controller
     public function search(Request $request){
         $products = $this->productRepo->search($request);
         return view('home.pages.search',compact('products'));
+    }
+    public function getAll(){
+        $products = $this->productRepo->getAllProduct();
+        return view('home.pages.list-product',compact('products',));
     }
 }

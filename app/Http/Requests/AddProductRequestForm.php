@@ -51,18 +51,4 @@ class AddProductRequestForm extends FormRequest
         return $ruleArr;
     }
 
-//    public function messages(){
-//        return [
-//            'room_name.required' => 'Hãy nhập tên phòng',
-//            'room_name.unique' => 'Tên phòng đã tồn tại',
-//            'room_name.unique' => 'Tên phòng đã tồn tại',
-//            'room_name.required' => 'Hãy nhập tên phòng',
-//            'price.required' => 'Hãy nhập giá sản phẩm',
-//            'price.numeric' => 'Giá sản phẩm không đúng định dạng',
-//            'floor.required' => 'Hãy nhập tầng',
-//            'floor.numeric' => 'Tầng không đúng định dạng',
-//            'uploadfile.required' => 'Hãy chọn ảnh sản phẩm',
-//            'uploadfile.mimes' => 'File ảnh sản phẩm không đúng định dạng (jpg, bmp, png, jpeg)',
-//        ];
-//    }
 }

@@ -41,6 +41,7 @@
 <!-- HEADER -->
 <header>
     <!-- TOP HEADER -->
+
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
@@ -181,7 +182,7 @@
 <!-- /HEADER -->
 
 <!-- NAVIGATION -->
-<nav id="navigation">
+<nav id="navigation" >
     <!-- container -->
     <div class="container">
         <!-- responsive-nav -->
@@ -192,7 +193,7 @@
             @foreach($categories as $category)
                 <li><a href="{{route('category',['id' => $category->id])}}">{{$category->categoryName}}</a></li>
                 @endforeach
-                <li><a href="">All products</a></li>
+                <li><a href="{{route('all-product')}}">All products</a></li>
                 <li><a href="">About Us</a></li>
 
             </ul>
@@ -203,6 +204,7 @@
     <!-- /container -->
 </nav>
 @yield('content');
+
 <footer id="footer">
     <!-- top footer -->
     <div class="section">

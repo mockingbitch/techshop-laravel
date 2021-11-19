@@ -24,13 +24,7 @@ class CustomerService
         $data['password']=$password_hashed;
         $token = strtoupper(Str::random(10));
         $data['rememberToken']=$token;
-        if ($customer=Customer::create($data)){
-            Mail::send('home.mail.mail-register',compact('customer'),function ($email) use($customer){
-                $email->subject('Techshop - Xác nhận tài khoản của bạn!!!');
-                $email->to($customer->email,$customer->customerName);
-            });
-            return redirect()->route('customer-login');
-        }
-        return redirect()->back();
+        $customer = Customer::create($data);
+        return $customer;
     }
 }

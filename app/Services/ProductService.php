@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Product;
+use App\Models\Stock;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
-
 class ProductService
 {
     /**
@@ -25,7 +26,22 @@ class ProductService
     public function add($request)
     {
         $request['productImage'] = $this->imageProcessing($request['productImage']);
-        $this->productRepo->create($request);
+        $product=$this->productRepo->create($request);
+        if ($product->productQuantity >= 1){
+            $status = 1;
+        }
+        else{
+            $status = 0;
+        }
+        $data = [
+            'productId'=>$product->id,
+            'quantity'=>$product->productQuantity,
+            'status'=>$status,
+            'productName'=>$product->productName,
+            'productPrice'=>$product->productPrice,
+            'productImage'=>$product->productImage,
+        ];
+        Stock::create($data);
     }
 
     /**
@@ -42,12 +58,28 @@ class ProductService
             'productPrice'=> $request->productPrice,
             'categoryId'=>$request->categoryId,
             'brandId'=>$request->brandId,
-            'productQuantity'=>$request->productQuantity,
         ];
         if($request->hasFile('productImage')){
             $product['productImage'] = $this->imageProcessing($request->productImage);
         }
-        $this->productRepo->update($id, $product);
+        $updateProduct = $this->productRepo->update($id, $product);
+        if ($updateProduct->productQuantity >= 1){
+            $status = 1;
+        }
+        else{
+            $status = 0;
+        }
+        $data = [
+            'productId'=>$updateProduct->id,
+            'quantity'=>$updateProduct->productQuantity,
+            'status'=>$status,
+            'productName'=>$updateProduct->productName,
+            'productPrice'=>$updateProduct->productPrice,
+            'productImage'=>$updateProduct->productImage,
+        ];
+        $stockId = Stock::where('productId',$id)->get();
+        $a = $stockId->toArray();
+        Stock::where('id',$a[0]['id'])->update($data);
     }
     /**
      * @param $request array
@@ -58,5 +90,15 @@ class ProductService
         $productImage = uniqid('',true) . $file->getClientOriginalName();
         $file->move('uploads/product',$productImage);
         return $productImage;
+    }
+    public function delete($id){
+        $product = Product::where('id',$id);
+        $stock = Stock::where('productId',$id);
+        if($product && $stock){
+            $product->delete();
+            $stock->delete();
+            return true;
+        }
+        return false;
     }
 }

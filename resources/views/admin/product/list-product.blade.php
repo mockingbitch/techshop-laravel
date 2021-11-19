@@ -24,8 +24,8 @@
                         <td>{{$product->id}}</td>
                         <td>{{$product->productName}}</td>
                         <td>{{$product->productDescription}}</td>
-                        <td>{{$product->productPrice}}</td>
-                        <td>{{$product->productQuantity}}</td>
+                        <td>{{number_format($product->productPrice) }} Đ</td>
+                        <td>{{$product->stock->quantity}}</td>
                         <td><img width="100px" src="{{asset('uploads/product/'.$product->productImage)}}" alt=""></td>
                         <td align="left"><a class="btn btn-success" href="{{route('product.edit',['id' => $product->id])}}"><i class="fas fa-edit"></i></a></td>
                         <td align="left"><a class="btn btn-danger"
