@@ -46,4 +46,8 @@ class HomeController extends Controller
         Auth::guard('customer')->logout();
         return redirect('/');
     }
+    public function search(Request $request){
+        $products = $this->productRepo->search($request);
+        return view('home.pages.search',compact('products'));
+    }
 }

@@ -70,7 +70,10 @@
                     <input class="input100" type="password" name="password">
                     <span class="focus-input100"></span>
                 </div>
-
+                <span style="color: red"> @if(isset($msg))
+                        {{$msg}}
+                    @endif
+                </span>
                 <div class="container-login100-form-btn m-t-17">
                     <input class="login100-form-btn" type="submit" name="login" value="Login">
                 </div>

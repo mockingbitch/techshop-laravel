@@ -39,5 +39,10 @@ Interface BaseRepositoryInterface
      */
     public function delete($id);
 
-
+    /**
+     * paginate
+     * @param
+     * @return mixed
+     */
+    public function paginate($int);
 }

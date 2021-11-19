@@ -1,35 +1,38 @@
 @extends('admin.adminLayout')
 @section('content')
-    <div class="content-wrapper">
+
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
         <!-- Bootstrap -->
-        <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css"/>
+        <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/bootstrap.min.css')}}"/>
 
         <!-- Slick -->
-        <link type="text/css" rel="stylesheet" href="../css/slick.css"/>
-        <link type="text/css" rel="stylesheet" href="../css/slick-theme.css"/>
+        <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/slick.css')}}"/>
+        <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/slick-theme.css')}}"/>
 
         <!-- nouislider -->
-        <link type="text/css" rel="stylesheet" href="../css/nouislider.min.css"/>
+        <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/nouislider.min.css')}}"/>
 
         <!-- Font Awesome Icon -->
-        <link rel="stylesheet" href="../css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{asset('frontend/css/font-awesome.min.css')}}">
 
         <!-- Custom stlylesheet -->
-        <link type="text/css" rel="stylesheet" href="../css/style.css"/>
+        <link type="text/css" rel="stylesheet" href="{{asset('frontend/css/style.css')}}"/>
         <div class="section">
             <!-- container -->
             <div class="container">
                 <!-- row -->
                 <div class="row">
-                    <form action="" method="POST">
-
                         <div class="col-md-7">
                             <!-- Billing Details -->
                             <div class="billing-details">
                                 <div class="section-title">
                                     <h3 class="title">Thông tin chi tiết đơn hàng</h3>
+                                    <span style="color: red">
+                                        @if(isset($msg))
+                                            {{$msg}}
+                                            @endif
+                                    </span>
                                 </div>
                                 <div>
                                     <div class="form-group">
@@ -85,15 +88,20 @@
                                     <div><strong class="order-total">{{$order->subTotal}} Đ</strong></div>
                                 </div>
                             </div>
-                            <button class="primary-btn order-submit" type="submit">
-                                <a href="order.php" style="color: white;font-weight: bold">Trở về</a></button>
+
+                            <button class="btn btn-primary" type="submit">
+                                <a href="{{route('order.confirm',['id'=>$order->id])}}" style="color: white;font-weight: bold">Xác nhận đơn hàng</a></button>
+                                <button class="btn btn-primary" type="submit">
+                                    <a href="{{route('order.shipping',['id'=>$order->id])}}" style="color: white;font-weight: bold">Vận chuyển</a></button>
+
                         </div>
-                    </form>
+                    <button class="primary-btn order-submit" type="submit">
+                        <a href="{{route('list-order.index')}}" style="color: white;font-weight: bold">Trở về</a></button>
+
                     <!-- /Order Details -->
                 </div>
                 <!-- /row -->
             </div>
             <!-- /container -->
         </div>
-    </div>
 @endsection

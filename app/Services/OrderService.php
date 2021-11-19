@@ -70,4 +70,29 @@ class OrderService
         $orderDetails = OrderDetail::where('orderId',$id)->get();
         return $orderDetails;
     }
+    public function confirm($id){
+        $data = ['status'=>1];
+        $order = $this->orderRepo->find($id);
+        if ($order['status']==1 || $order['status']==2){
+            $msg = '*Đơn hàng đã được xử lý';
+            return $msg;
+        }else{
+            $this->orderRepo->update($id,$data);
+            $msg = 'Done';
+            return $msg;
+        }
+    }
+    public function shipping($id){
+        $data = ['status'=>2];
+        $order = $this->orderRepo->find($id);
+        if ($order['status']==0 || $order['status']==2){
+            $msg = '*Đơn hàng chưa được xử lý';
+            return $msg;
+
+        }else{
+            $this->orderRepo->update($id,$data);
+            $msg = 'Done';
+            return $msg;
+        }
+    }
 }

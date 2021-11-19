@@ -30,7 +30,7 @@ class CustomerController extends Controller
         if (Auth::guard('customer')->attempt($credentials)) {
             if (Auth::guard('customer')->user()->emailVerify==''){
                 Auth::guard('customer')->logout();
-                return redirect()->route('customer-login')->with('msg','Please verify your account');
+                return redirect()->route('customer-login')->with('msg','Please <a href="https://gmail.com">verify</a> your account');
                 }
             elseif (Auth::guard('customer')->user()->emailVerify=='1'){
                 return redirect('/home');

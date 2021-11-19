@@ -29,12 +29,14 @@
             <div class="login100-pic js-tilt" data-tilt>
                 <img src="{{asset('backend/vendor/img/6.png')}}" alt="IMG">
             </div>
-
             <form method="post" class="login100-form validate-form">
                 @csrf
 					<span class="login100-form-title">
 						Admin Login
 					</span>
+                @if(isset($msg))
+                    <span style="color: red;">{{$msg}}</span>
+                @endif
 
                 <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                     <input class="input100" type="text" name="email" placeholder="Email">

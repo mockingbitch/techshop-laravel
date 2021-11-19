@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = $this->productRepo->getAll();
+        $products = $this->productRepo->paginate(5);
         return view('admin.product.list-product', compact('products'));
     }
 
@@ -63,10 +63,12 @@ class ProductController extends Controller
         return view('admin.product.add-product',compact('categories','brands'));
     }
     public function store(AddProductRequestForm $request){
-
+        $categories = $this->categoryRepo->getAll();
+        $brands = $this->brandRepo->getAll();
         $data = $request->validated();
         $this->productService->add($data);
-        return redirect(route('list-product.index'));
+        return view('admin.product.add-product',compact('categories','brands'))->with('msg','*Thêm thành công');
+
     }
     public function show($id)
     {
@@ -74,7 +76,6 @@ class ProductController extends Controller
         $brands = $this->brandRepo->getAll();
         $product = $this->productRepo->find($id);
         $product->load('category');
-
         return view('admin.product.edit-product',compact('product','categories','brands'));
     }
     public function viewDetail(Request $request)

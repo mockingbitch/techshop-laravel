@@ -21,4 +21,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $result = $this->model->where('brandId',$product->brandId)->get();
         return $result;
     }
+    public function search($request){
+        $textSearch = $request->textSearch;
+        $result = $this->model->where('productName','like',$textSearch)->get();
+        return $result;
+    }
 }

@@ -93,9 +93,10 @@
                                 <option value="1">Category 01</option>
                                 <option value="1">Category 02</option>
                             </select>
-                            <form method="GET">
-                                <input class="input" name="textsearch" placeholder="Tìm kiếm">
-                                <button formaction="../search-result.php" class="search-btn" type="submit" >Tìm kiếm</button>
+                            <form method="POST" action="{{route('search')}}">
+                                @csrf
+                                <input class="input" name="textSearch" placeholder="Tìm kiếm">
+                                <button  class="search-btn" type="submit" >Tìm kiếm</button>
                             </form>
                         </form>
                     </div>
@@ -133,7 +134,7 @@
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">{{$cart['productName']}}</a></h3>
-                                            <h4 class="product-price"><span class="qty">{{$cart['quantity']}}x</span>{{$cart['productPrice']}} Đ</h4>
+                                            <h4 class="product-price"><span class="qty">{{$cart['quantity']}}x</span>{{number_format($cart['productPrice'])}} Đ</h4>
                                             @php $total = $cart['quantity']*$cart['productPrice'] @endphp
                                         </div>
                                       @php $subtotal = $subtotal+$total; @endphp

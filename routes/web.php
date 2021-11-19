@@ -79,7 +79,10 @@ Route::middleware(['checklogin'])->group(function(){
         Route::prefix('order')->group(function (){
             Route::get('list-order',[OrderController::class,'index'])->name('list-order.index');
             Route::get('view-order/{id}',[OrderDetailController::class,'index'])->name('order.view');
-            Route::post('view-order/{id}',[OrderDetailController::class,'handleOrder'])->name('order.view');
+            Route::get('view-order/confirm/{id}',[OrderController::class,'confirm'])->name('order.confirm');
+            Route::get('view-order/shipping/{id}',[OrderController::class,'shipping'])->name('order.shipping');
+
+//            Route::post('view-order/{id}',[OrderDetailController::class,'handleOrder'])->name('order.view');
         });
     });
 });
@@ -98,6 +101,7 @@ Route::get('/home',[HomeController::class,'index'])->name('home');
 Route::get('/logout',[HomeController::class,'logout'])->name('customer-logout');
 Route::get('/category/{id}',[HomeController::class,'showCategoryItems'])->name('category');
 Route::get('/product/{id}',[HomeController::class,'productDetail'])->name('view-product');
+Route::post('/search',[HomeController::class,'search'])->name('search');
 Route::get('/add-to-cart',[CartController::class,'add'])->name('add-to-cart');
 Route::get('/view-cart',[CartController::class,'index'])->name('view-cart');
 Route::prefix('cart')->group(function(){

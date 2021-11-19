@@ -3,6 +3,11 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <h3 align="center" style="text-shadow: 1px 1px 5px grey;">Danh sách đơn hàng</h3>
+            <span>
+                @if(isset($msg))
+                    echo {{$msg}}
+                    @endif
+            </span>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -20,11 +25,11 @@
                        <td>{{$order->id}}</td>
                         <td>{{$order->customerName}}</td>
                         <td>@if($order->status==0)
-                                Chưa xử lý
+                                <span style="color: red">Chưa xử lý</span>
                             @elseif($order->status == 1)
-                                Đang vận chuyển
+                                <span style="color: blue">Đã xác nhận, chờ vận chuyển</span>
                             @else
-                                Đã giao
+                                <span style="color: green">Đã giao</span>
                             @endif
                         </td>
                         <td>{{$order->created_at->format('h:m:s-d/m/Y')}}</td>

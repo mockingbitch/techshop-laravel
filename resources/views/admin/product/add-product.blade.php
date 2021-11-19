@@ -27,7 +27,11 @@
                         <!-- jquery validation -->
                         <div class="card ">
                             <div class="card-header">
-                                <h3 class="card-title"> <small><span></span></small></h3>
+                                <h3 class="card-title"> <small><span style="color: green">
+                                            @if(isset($msg))
+                                                {{$msg}}
+                                                @endif
+                                        </span></small></h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
